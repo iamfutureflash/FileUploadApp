@@ -1,14 +1,27 @@
 const express = require("express");
-const path = require("path"); // Import the path module
-const { connectWithMongoDB } = require("./config/databaseConfig");
 const app = express();
-const PORT = 3000;
+const path = require("path");
+const fileupload = require("express-fileupload");
+const { connectWithMongoDB } = require("./config/databaseConfig");
+const { cloudinaryConnect } = require("./config/cloudinaryConfig");
+const upload = require("./routes/fileUploadRoutes")
+require("dotenv").config();
+
+app.use(express.json());
+app.use(fileupload());
+app.use('/api/v1/upload' , upload);
+
+
+const PORT = process.env.PORT || 4000;
+connectWithMongoDB();
+cloudinaryConnect();
+
 app.listen(PORT, () => {
     console.log(`server started at posrt ${PORT}`);
 });
-app.get("/", (req, res) => { 
-    // res.send("<h1 style=>this is file upload homepage</h1>");
-    // res.sendFile("./public/homepage.html");
+app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, '/public/homepage.html'));
 })
-connectWithMongoDB();
+
+
+
