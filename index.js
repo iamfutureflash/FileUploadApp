@@ -8,8 +8,11 @@ const upload = require("./routes/fileUploadRoutes")
 require("dotenv").config();
 
 app.use(express.json());
-app.use(fileupload());
-app.use('/api/v1/upload' , upload);
+app.use(fileupload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
+app.use('/api/v1/upload', upload);
 
 
 const PORT = process.env.PORT || 4000;
