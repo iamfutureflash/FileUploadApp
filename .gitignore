@@ -12,7 +12,7 @@ yarn-error.log*
 .npm
 
 # Environment variables
-.env
+.env.example
 
 # IDEs and editors
 .vscode
